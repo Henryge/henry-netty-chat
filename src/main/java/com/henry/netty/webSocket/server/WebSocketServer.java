@@ -40,21 +40,22 @@ public class WebSocketServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            KeyManagerFactory keyManagerFactory = null;
-                            KeyStore keyStore = KeyStore.getInstance("JKS");
-                            keyStore.load(new FileInputStream("D:\\temp\\sChat.jks"), "sNetty".toCharArray());
-                            String algorithm = Security.getProperty("ssl.KeyManagerFactory.algorithm");
-                            if (algorithm == null) {
-                                algorithm = "SunX509";
-                            }
-                            keyManagerFactory = KeyManagerFactory.getInstance(algorithm);
-                            keyManagerFactory.init(keyStore,"sNetty".toCharArray());
-                            SslContext sslContext = SslContextBuilder.forServer(keyManagerFactory).build();
-                            SSLEngine engine = sslContext.newEngine(ch.alloc());
+//                            KeyManagerFactory keyManagerFactory = null;
+//                            KeyStore keyStore = KeyStore.getInstance("JKS");
+//                            keyStore.load(new FileInputStream("D:\\temp\\sChat.jks"), "sNetty".toCharArray());
+//                            keyStore.load(new FileInputStream("/home/henryge/certi/sChat.jks"), "sNetty".toCharArray());
+//                            String algorithm = Security.getProperty("ssl.KeyManagerFactory.algorithm");
+//                            if (algorithm == null) {
+//                                algorithm = "SunX509";
+//                            }
+//                            keyManagerFactory = KeyManagerFactory.getInstance(algorithm);
+//                            keyManagerFactory.init(keyStore,"sNetty".toCharArray());
+//                            SslContext sslContext = SslContextBuilder.forServer(keyManagerFactory).build();
+//                            SSLEngine engine = sslContext.newEngine(ch.alloc());
+//
+//                            engine.setUseClientMode(false);
 
-                            engine.setUseClientMode(false);
-
-                            ch.pipeline().addFirst(new SslHandler(engine));
+//                            ch.pipeline().addFirst(new SslHandler(engine));
                             ch.pipeline().addLast(new HttpServerCodec());
                             ch.pipeline().addLast(new HttpObjectAggregator(65536));
                             ch.pipeline().addLast(new WebSocketServerProtocolHandler("/websocket"));
